@@ -1,20 +1,21 @@
-$("#btn-themmoikhachhang").click(function () {
+$("#btn-themmoinhanvien").click(function () {
     
-    const TenKhachHang = $("#TenKhachHang").val();
+    const TenNhanVien = $("#TenNhanVien").val();
     const GioiTinh = $('input[name="GioiTinh"]:checked').val();
     const DiaChi = $("#DiaChi").val();
     const DienThoai = $("#DienThoai").val();
-    console.log(GioiTinh);
+    const NgaySinh = $("#NgaySinh").val();
     const data = {
-        TenKhachHang: TenKhachHang,
+        TenNhanVien: TenNhanVien,
         GioiTinh: GioiTinh,
         DiaChi: DiaChi,
         DienThoai: DienThoai,
+        NgaySinh:NgaySinh
     };
 
     $.ajax({
         method: "POST",
-        url: "/themkhachhang",
+        url: "/themnhanvien",
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },

@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QLKhachHangController;
 use App\Http\Controllers\QLMatHangController;
+use App\Http\Controllers\QLNhanVienController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -48,3 +49,12 @@ Route::get('/ql-khachhang', [QLKhachHangController::class, 'index']);
 Route::post('/themkhachhang', [QLKhachHangController::class, 'themKhachHang']);
 Route::get('/xoakhachhang', [QLKhachHangController::class, 'xoaKhachHang']);
 Route::get('/editkhachhang/{id}', [QLKhachHangController::class, 'updateKhachHang']);
+Route::post('/suakhachhang/{id}', [QLKhachHangController::class, 'suakhachang']);
+Route::post('/searchkhachhang', [QLKhachHangController::class, 'searchKhachHang']);
+// Nhan Vien
+Route::get('/ql-nhanvien', [QLNhanVienController::class, 'index']);
+Route::post('/themnhanvien', [QLNhanVienController::class, 'themNhanVien']);
+Route::get('/xoanhanvien', [QLNhanVienController::class, 'xoaNhanVien']);
+Route::get('/editnhanvien/{id}', [QLNhanVienController::class, 'updateNhanVien']);
+Route::post('/suanhanvien/{id}', [QLNhanVienController::class, 'suanhanvien']);
+Route::post('/searchnhanvien', [QLNhanVienController::class, 'searchNhanVien']);

@@ -32,3 +32,14 @@ for (let i = 0; i < btn_delete_khachhang.length; i++) {
         $("#form-delete").submit();
     });
 }
+
+const btn_delete_nhanvien = document.getElementsByClassName("btn-delete-nhanvien");
+
+for (let i = 0; i < btn_delete_nhanvien.length; i++) {
+    const element = btn_delete_nhanvien[i];
+    element.addEventListener("click", () => {
+        const id = element.getAttribute("data-id");
+        $("#deleteNhanvien").val(id);
+        $("#form-delete").submit();
+    });
+}

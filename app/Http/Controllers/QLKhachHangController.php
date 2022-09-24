@@ -45,8 +45,31 @@ class QLKhachHangController extends Controller
     }
     public  function updateKhachHang(Request $request, $id ){
         $khachhangarr = DB::table('khachhang')->where('MaKhachHang',  $id)->get();
-
         $khachhang = $khachhangarr[0];
         return view('quanlykhachhang/edit-khachhang')->with(compact('khachhang'));
+    }
+    public function suakhachang(Request $request, $id){
+  
+        $khachahng =  KhachHang::find($id);
+        $data = $request->all();
+        $khachahng->TenKhachHang = $data['TenKhachHang'];
+        $khachahng->GioiTinh =  $data['GioiTinh'];
+        $khachahng->DiaChi = $data['DiaChi'];
+        $khachahng->DienThoai = $data['DienThoai'];
+        $khachahng->save();
+        return redirect('/ql-khachhang');
+    }
+
+    public function searchKhachHang(Request $request)
+    {
+        if (is_null($request['keyword'])) {
+            return redirect('/ql-khachhang');
+        }
+
+         $khachhangAll =  DB::table('khachhang')
+         ->where('MaKhachHang', 'like', '%' . $request['keyword'] . '%')
+         ->orWhere('TenKhachHang', 'like', '%' . $request['keyword'] . '%')
+         ->orderBy('created_at', 'desc')->get()->toArray();
+        return view('quanlykhachhang/mh-home')->with(compact('khachhangAll'));
     }
 }

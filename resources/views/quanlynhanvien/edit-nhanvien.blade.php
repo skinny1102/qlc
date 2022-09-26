@@ -7,7 +7,7 @@
   <div class="col-8">
     <div class="d-flex justify-content-center">
       <h4 class="w-100 mt-3">Chỉnh sửa Nhân Viên</h4>
-      <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#modalcreate">Thêm cây Cảnh</button>
+      <!-- <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#modalcreate">Thêm cây Cảnh</button> -->
     </div>
     <form method="POST" action="/suanhanvien/{{$nhanvien->MaNhanVien}}" >
       @csrf

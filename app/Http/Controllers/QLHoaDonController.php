@@ -24,8 +24,7 @@ class QLHoaDonController extends Controller
     public function index()
     {
         
-        $nhanvienAll =  DB::table('nhanvien')->orderBy('created_at', 'desc')->get()->toArray();
-        return view('quanlynhanvien/mh-nhanvien')->with(compact('nhanvienAll'));
+        return view('quanlyhoadon/mh-home');
     }
     public function themNhanVien(Request $request)
     {

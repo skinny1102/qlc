@@ -157,4 +157,18 @@ class QLMatHangController extends Controller
             ->get()->toArray();
         return  view('quanlymathang/mh-caycanh')->with(compact('loaicayAll'))->with(compact('caycanhAll'));
     }
+
+
+
+    //////////////////// API 
+    public function listCayCanh(){
+        $caycanhAll =  DB::table('caycanh')->orderBy('created_at', 'desc')->get()->toArray();
+        return $caycanhAll;
+    }
+
+    public function detailsCayCanh(Request $request,$id){
+        $caycanharr = DB::table('caycanh')->where('MaCay',  $id)->get();
+        $caycanh = $caycanharr[0];
+        return $caycanh;
+    }
 }

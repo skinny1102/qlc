@@ -26,4 +26,5 @@
     <script src="/js/themmoiloaicay.js"></script>
     <script src="/js/khachhang.js"></script>
     <script src="/js/nhanvien.js"></script>
+    <script src="/js/hoadon.js"></script>
 </html>

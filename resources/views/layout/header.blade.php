@@ -6,7 +6,7 @@
     <div class="collapse navbar-collapse" id="" style="height: 50px;">
         <ul class="navbar-nav " style="height: 100%;">
             <li class="nav-item mr-3 pt-2  menu-hover-active-li ">
-                <a class="navbar-link text-light" href="#">Quản lý hóa đơn </a>
+                <a class="navbar-link text-light" href="/ql-hoadon">Quản lý hóa đơn </a>
             </li>
             <li class="nav-item mr-3 pt-2  menu-hover-active-li ">
                 <a class="navbar-link text-light " href="/ql-nhanvien">Quản lý thông tin nhân viên</a>

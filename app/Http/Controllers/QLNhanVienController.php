@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
-class QLHoaDonController extends Controller
+class QLNhanVienController extends Controller
 {
     //
     // public function __construct()
@@ -75,5 +75,9 @@ class QLHoaDonController extends Controller
          ->orWhere('TenNhanVien', 'like', '%' . $request['keyword'] . '%')
          ->orderBy('created_at', 'desc')->get()->toArray();
         return view('quanlynhanvien/mh-nhanvien')->with(compact('nhanvienAll'));
+    }
+    public function listNhanVien(){
+        $nhanvienAll =  DB::table('nhanvien')->orderBy('created_at', 'desc')->get()->toArray();
+        return $nhanvienAll;
     }
 }

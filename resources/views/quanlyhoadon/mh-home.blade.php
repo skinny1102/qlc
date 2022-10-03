@@ -1,11 +1,10 @@
 @extends('layout.layout')
 @section('noidung')
 <div class="row ">
-    <div class="col-3">
+    <div class="col-2">
         <div class="p-3 border bg-ligh mt-3 ml-3 menu-hover-active-li"><a href="/ql-nhanvien">Hóa Đơn</a></div>
     </div>
-    <div class="col-8">
-
+    <div class="col-9">
         <div class="d-flex justify-content-between">
             <h4 class=" mt-3">Danh sách hóa đơn</h4>
             <div class="justify-content-between mt-3 ">
@@ -35,29 +34,31 @@
             </thead>
             <tbody>
             <tbody>
+            @foreach ($hoadonAll as $hoadon)
                 <tr>
                     <td scope="row">1</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{$hoadon->MaHoaDon}}</td>
+                    <td>{{$hoadon->TenNhanVien}}</td>
+                    <td>{{$hoadon->TenKhachHang}}</td>
+                    <td>{{$hoadon->NgayBan}}</td>
+                    <td>{{$hoadon->TongTien}}</td>
+                    <td>{{$hoadon->inhoadon}}</td>
                     <td>
-                        <button type="button" class="btn btn-danger btn-delete-nhanvien" data-id="">Xóa</button>
-                        <a type="submit" class="btn btn-success" href="editnhanvien/">Chỉnh sửa</a>
-
+                        <a type="button" class="btn btn-secondary" href="inhoadon/{{$hoadon->MaHoaDon}}">In</a>
+                        <a type="submit" class="btn btn-success" href="edithoadon/{{$hoadon->MaHoaDon}}">Chỉnh sửa</a>
+                        <button type="button" class="btn btn-danger btn-delete-hoadon" data-id="{{$hoadon->MaHoaDon}}">Xóa</button>
                     </td>
                 </tr>
+            @endforeach
             </tbody>
             </tbody>
         </table>
     </div>
 </div>
-<form action="/xoanhanvien" method="GET" hidden id="form-delete">
+<form action="/xoahoadon" method="GET" hidden id="form-delete">
     @csrf
     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-    <input type="text" class="form-control" id="deleteNhanvien" name="MaNhanVien">
+    <input type="text" class="form-control" id="deletehoadon" name="MaHoaDon">
 </form>
 <!-- Modal -->
 <div class=" modal fade " id="modalcreate" tabindex="-1" aria-labelledby="modalCreateLabel" aria-hidden="true">
@@ -74,14 +75,13 @@
                     @csrf
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                     <div class="row">
-                        <div class="form-group col-6">
+                        <!-- <div class="form-group col-6">
                             <label for="MaHoaDon">Mã Hóa Đơn</label>
                             <input type="text" class="form-control" id="MaHoaDon" name="MaHoaDon" readonly>
-                        </div>
+                        </div> -->
                         <div class="form-group col-6">
                             <label for="MaNhanVien">Tên Nhân Viên</label>
-                            <select class="form-control" aria-label=".form-select-sm example" id="MaNhanVien" name="MaNhanVien">
-                                <option value="" selected>Nhân Viên</option>
+                                 <select class="form-control" aria-label=".form-select-sm example" id="MaNhanVien" name="MaNhanVien">
                             </select>
                         </div>
                     </div>
@@ -91,9 +91,21 @@
                             <input type="date" class="form-control" id="NgayBan" name="NgayBan" readonly value="<?php echo date('Y-m-d'); ?>">
                         </div>
                         <div class="form-group col-6">
+                            <label for="MaKhachHang">Tên Khách hàng</label>
+                            <select class="form-control" aria-label=".form-select-sm example" id="MaKhachHang" name="MaKhachHang">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="form-group col-6">
                             <label for="TongTien">Tổng tiền</label>
                             <input type="text" class="form-control" id="TongTien" name="TongTien" readonly>
                         </div>
+                        <!-- <div class="form-group col-6">
+                            <label for="TongTien">Tổng tiền</label>
+                            <input type="text" class="form-control" id="TongTien" name="TongTien" readonly>
+                        </div> -->
                     </div>
                     <hr>
                     <div class="row justify-content-between">
@@ -113,29 +125,29 @@
                                 </tr>
                             </thead>
                             <tbody id="table-body">
-                                <tr id="tr-body">
+                                <tr id="tr-body1" data-id="tr-body1">
                                     <th scope="row">
                                         <select class="form-control ten-cay" aria-label=".form-select-sm example" id="MaLoaiCay" name="MaNhanVien">
                                             <option value="" selected></option>
                                         </select>
                                     </th>
                                     <td>
-                                        <input type="text" class="form-control" id="TenCay" name="TenCay" style="width: 141px;" readonly>
+                                        <input type="text" class="form-control" id="MaCay1" name="MaCay" style="width: 141px;" readonly>
                                     </td>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="Gia" name="Gia" style="width: 100px;" readonly>
+                                        <input type="text" class="form-control" id="Gia1" name="Gia" style="width: 100px;" readonly>
                                     </td>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" name="SoLuong" style="width:100px;">
+                                        <input type="text" class="form-control" id="SoLuong1" name="SoLuong" style="width:100px;">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" name="DonGia" style="width: 100px;">
+                                        <input type="text" class="form-control" id="DonGia1" name="DonGia" style="width: 100px;" readonly>
                                     </td>
                                     </td>
                                     <td>
-                                        <div class="btn btn-danger" data-id="">Xóa</div>
+                                        <div class="btn btn-danger  btn-xoa" data-id="" disable>Xóa</div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -147,7 +159,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-model-nhanvien">Đóng</button>
-                <button type="submit" class="btn btn-success" id="btn-themmoinhanvien">Thêm mới </button>
+                <button type="submit" class="btn btn-success" id="btn-themmoihoadon">Thêm mới </button>
             </div>
         </div>
     </div>

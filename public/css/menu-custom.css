@@ -1,3 +1,6 @@
+body{
+    background-color: rgba(251, 251, 251, 0.821);
+}
 a:hover {
     text-decoration: none;
 }
@@ -5,5 +8,13 @@ a:hover {
     background-color: #ffac1c !important;
     cursor: pointer;
 }
-
-
+.ftm{
+    font-family: 'Times New Roman', Times, serif;
+}
+.header-receipt{
+    font-size: 35px;
+    font-weight: bold;
+}
+.bg-clg{
+    background-color:rgb(237, 234, 234)
+}

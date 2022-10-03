@@ -46,9 +46,7 @@ Route::get('/ql-mathang/caycanh/{id}', [QLMatHangController::class, 'detailCayCa
 Route::post('/editcaycanh/{id}', [QLMatHangController::class, 'updateCayCanh']);
 Route::post('/searchcaycanh', [QLMatHangController::class, 'searchCayCanh']);
 
-// api 
-Route::get('/listcaycanh', [QLMatHangController::class, 'listCayCanh']);
-Route::get('/detailcaycanh/{id}', [QLMatHangController::class, 'detailsCayCanh']);
+
 
 //Khachhang 
 Route::get('/ql-khachhang', [QLKhachHangController::class, 'index']);
@@ -67,3 +65,24 @@ Route::post('/searchnhanvien', [QLNhanVienController::class, 'searchNhanVien']);
 
 // HoaDon 
 Route::get('/ql-hoadon', [QLHoaDonController::class, 'index']);
+Route::Post('/themhoadon', [QLHoaDonController::class, 'themhoandon']);
+Route::get('/xoahoadon', [QLHoaDonController::class, 'xoahoadon']);
+Route::get('/edithoadon/{id}', [QLHoaDonController::class, 'edithoadon']);
+Route::post('/suahoadon/{id}', [QLHoaDonController::class, 'suahoadon']);
+
+    /// them chi tiet
+Route::post('/themchitiet', [QLHoaDonController::class, 'themchitiet']);
+    // xoa chi tiet xoachitiethoadon
+Route::get('/xoachitiethoadon', [QLHoaDonController::class, 'xoachitiethoadon']);
+    /// btn-suachitiethoadon
+Route::get('/chitiethoadon/{id}', [QLHoaDonController::class, 'chitiethoadon']);
+Route::post('/suachitiethoadon', [QLHoaDonController::class, 'suachitiethoadon']);
+    //inhoadon 
+    Route::get('/inhoadon/{id}', [QLHoaDonController::class, 'inhoadon']); 
+// api 
+Route::get('/listcaycanh', [QLMatHangController::class, 'listCayCanh']);
+Route::get('/detailcaycanh/{id}', [QLMatHangController::class, 'detailsCayCanh']);
+    //get khachhang all
+Route::get('/listkhachhang', [QLKhachHangController::class, 'listKhachHang']);   
+    /// get nhanvien all
+Route::get('/listnhanvien', [QLNhanVienController::class, 'listNhanVien']);   

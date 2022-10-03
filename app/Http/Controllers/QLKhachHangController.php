@@ -72,4 +72,9 @@ class QLKhachHangController extends Controller
          ->orderBy('created_at', 'desc')->get()->toArray();
         return view('quanlykhachhang/mh-home')->with(compact('khachhangAll'));
     }
+
+    public function listKhachHang(){
+        $khachhangAll =  DB::table('khachhang')->orderBy('created_at', 'desc')->get()->toArray();
+        return  $khachhangAll;
+    }
 }

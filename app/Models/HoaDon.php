@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 
-class CayCanh extends Model
+class HoaDon extends Model
 {
 
     /**
@@ -17,7 +17,8 @@ class CayCanh extends Model
         'MaNhanVien',
         'MaKhachHang',
         'NgayBan',
-        'inhoadon'
+        'inhoadon',
+        'TongTien'
     ];
     protected $primaryKey = 'MaHoaDon';
     protected $table = 'hoadon';

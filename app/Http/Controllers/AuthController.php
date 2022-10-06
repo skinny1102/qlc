@@ -49,4 +49,29 @@ class AuthController extends Controller
           
         }
     }
+    public function doimatkhau(){
+        $error = "" ; 
+        return view('doimatkhau')->with(compact('error'));
+    }
+    public function submitdoimatkhau(Request $request){
+     
+       $data = $request->all();
+       $oldPassword = $data['oldPassword'];
+       $newPassword = $data['newPassword'];
+       $user= Session::get('user');
+       $username=$user[0]->username ; 
+       $password = $user[0]->password;
+
+       if($oldPassword!= $password ){
+            $error = "Mật khẩu cũ không đúng";
+            return view('doimatkhau')->with(compact('error'));
+       }else{
+    
+        $userFind  = Taikhoan::find($user[0]->id);
+        $userFind->password =  $newPassword ;
+        $userFind->save();
+        $error = "Thành công";
+        return view('doimatkhau')->with(compact('error'));
+       }
+    }
 }

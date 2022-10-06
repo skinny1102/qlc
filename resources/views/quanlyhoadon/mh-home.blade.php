@@ -2,13 +2,14 @@
 @section('noidung')
 <div class="row ">
     <div class="col-2">
-        <div class="p-3 border bg-ligh mt-3 ml-3 menu-hover-active-li"><a href="/ql-nhanvien">Hóa Đơn</a></div>
+        <div class="p-3 border bg-dark mt-3 ml-3 menu-hover-active-li"><a href="/ql-nhanvien">Hóa Đơn</a></div>
+        <div class="p-3 border bg-dark mt-3 ml-3 menu-hover-active-li"><a href="/ql-baocaothongke">Báo Cáo Thống Kê</a></div>
     </div>
     <div class="col-9">
         <div class="d-flex justify-content-between">
             <h4 class=" mt-3">Danh sách hóa đơn</h4>
             <div class="justify-content-between mt-3 ">
-                <form action="/searchnhanvien" method="POST">
+                <form action="/searchhoadon" method="POST">
                     @csrf
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                     <div class="row">
@@ -34,9 +35,11 @@
             </thead>
             <tbody>
             <tbody>
+            <?php $number = 1; ?>
             @foreach ($hoadonAll as $hoadon)
                 <tr>
-                    <td scope="row">1</td>
+                    <td scope="row">{{ $number }}</td>
+                    <?php $number++; ?>
                     <td>{{$hoadon->MaHoaDon}}</td>
                     <td>{{$hoadon->TenNhanVien}}</td>
                     <td>{{$hoadon->TenKhachHang}}</td>

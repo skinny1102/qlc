@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\QLBaoCaoController;
 use App\Http\Controllers\QLHoaDonController;
 use App\Http\Controllers\QLKhachHangController;
 use App\Http\Controllers\QLMatHangController;
@@ -30,6 +31,8 @@ Route::get('/home',  [HomeController::class, 'index']);
 Route::get('/login', [AuthController::class, 'index']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout']);
+Route::get('/doimatkhau', [AuthController::class, 'doimatkhau']);
+Route::post('/doimatkhau', [AuthController::class, 'submitdoimatkhau']);
 Route::get('/ql-mathang', [QLMatHangController::class, 'dieuhuong']);
 /// QL Mathang
 Route::get('/ql-mathang/loaicay', [QLMatHangController::class, 'index']);
@@ -69,7 +72,8 @@ Route::Post('/themhoadon', [QLHoaDonController::class, 'themhoandon']);
 Route::get('/xoahoadon', [QLHoaDonController::class, 'xoahoadon']);
 Route::get('/edithoadon/{id}', [QLHoaDonController::class, 'edithoadon']);
 Route::post('/suahoadon/{id}', [QLHoaDonController::class, 'suahoadon']);
-
+// search hoa don
+Route::post('/searchhoadon', [QLHoaDonController::class, 'searchhoadon']);
     /// them chi tiet
 Route::post('/themchitiet', [QLHoaDonController::class, 'themchitiet']);
     // xoa chi tiet xoachitiethoadon
@@ -86,3 +90,7 @@ Route::get('/detailcaycanh/{id}', [QLMatHangController::class, 'detailsCayCanh']
 Route::get('/listkhachhang', [QLKhachHangController::class, 'listKhachHang']);   
     /// get nhanvien all
 Route::get('/listnhanvien', [QLNhanVienController::class, 'listNhanVien']);   
+Route::get('/xuatpdf/{id}', [QLHoaDonController::class, 'xuatpdf']);  
+// báo cáo thống kế
+Route::get('/ql-baocaothongke', [QLBaoCaoController::class, 'index']);  
+Route::get('/doanhthuthang', [QLBaoCaoController::class, 'doanhthuthang']);  

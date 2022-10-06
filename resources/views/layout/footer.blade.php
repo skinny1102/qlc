@@ -1,5 +1,5 @@
-<div class="card text-center mt-3">
-  <div class="card-header">
+<div class="card text-center mt-3 bg-dark text-light">
+  <div class="card-header ">
     Chuyên bán cây cảnh
   </div>
   <div class="card-body">

@@ -10,6 +10,7 @@ use App\Models\NhanVien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class QLHoaDonController extends Controller
 {
@@ -18,7 +19,46 @@ class QLHoaDonController extends Controller
     // {
     //     $this->middleware('auth');
     // }
+    public function xuatpdf(Request $request, $id)
+    {
+        $hoadonAll =  DB::table('hoadon')
+            ->selectRaw('nhanvien.TenNhanVien as TenNhanVien ,
+    khachhang.TenKhachHang as TenKhachHang ,
+    khachhang.DiaChi as DiaChi ,
+    khachhang.DienThoai as DienThoai ,
+    khachhang.MaKhachHang as MaKhachHang ,
+    hoadon.NgayBan as NgayBan ,
+    hoadon.TongTien as TongTien,
+    hoadon.MaHoaDon as MaHoaDon, 
+    hoadon.inhoadon as inhoadon ,
+    nhanvien.MaNhanVien as MaNhanVien,
+    nhanvien.TenNhanVien as TenNhanVien
+      ')
+            ->leftJoin('nhanvien', 'hoadon.MaNhanVien', '=', 'nhanvien.MaNhanVien')
+            ->leftJoin('khachhang', 'hoadon.MaKhachHang', '=', 'khachhang.MaKhachHang')
+            ->where('MaHoaDon',  $id)->get();
+        $hoadon = $hoadonAll[0];
 
+        $chitietAll =  DB::table('chitiethoadon')
+            ->selectRaw('
+        chitiethoadon.MaChiTietHoaDon as MaChiTietHoaDon ,
+        chitiethoadon.MaHoaDon as MaHoaDon ,
+     caycanh.TenCay as TenCay ,
+     caycanh.MaCay as MaCay ,
+     caycanh.DonGiaBan as DonGiaBan,
+     chitiethoadon.SoLuong as SoLuong, 
+     chitiethoadon.DonGia as DonGia 
+       ')
+            ->leftJoin('caycanh', 'caycanh.MaCay', '=', 'chitiethoadon.MaCay')
+            ->leftJoin('hoadon', 'hoadon.MaHoaDon', '=', 'chitiethoadon.MaHoaDon')
+            ->where('chitiethoadon.MaHoaDon',  $id)->get();
+
+
+        view()->share('hoadon', $hoadon);
+        view()->share('chitietAll', $chitietAll);
+        $pdf = Pdf::loadView('file');
+        return   $pdf->download('pdf_file.pdf');
+    }
     /**
      * Show the application dashboard.
      *
@@ -167,16 +207,17 @@ class QLHoaDonController extends Controller
         $hoadon->save();
         return redirect('edithoadon/' . $hoadon->MaHoaDon);
     }
-    public function themchitiet(Request $request){
+    public function themchitiet(Request $request)
+    {
 
         $data = $request->all();
         $MaCay = $data['MaCay'];
         $CayCanh =  CayCanh::find($MaCay);
-        $DonGia =  $CayCanh->DonGiaBan *$data['SoLuong'] ;
+        $DonGia =  $CayCanh->DonGiaBan * $data['SoLuong'];
         $chitiet = new ChiTietHoaDon();
         $chitiet->MaHoaDon = $data['MaHoaDon'];
         $chitiet->MaCay = $data['MaCay'];
-        $chitiet->DonGia =  $DonGia ;
+        $chitiet->DonGia =  $DonGia;
         $chitiet->SoLuong = $data['SoLuong'];
         $chitiet->save();
         // update tong tin hoa don
@@ -185,9 +226,10 @@ class QLHoaDonController extends Controller
         $TongtienUpdate =  $Tongtien + $DonGia;
         $hoadon->TongTien =  $TongtienUpdate;
         $hoadon->save();
-        return redirect('edithoadon/' .$data['MaHoaDon']); 
+        return redirect('edithoadon/' . $data['MaHoaDon']);
     }
-    public function xoachitiethoadon(Request $request){
+    public function xoachitiethoadon(Request $request)
+    {
         $chitiethoadon = ChiTietHoaDon::find($request['MaChiTietHoaDon']);
         $mahoadon = $chitiethoadon->MaHoaDon;
         $hoadon = HoaDon::find($mahoadon);
@@ -195,15 +237,17 @@ class QLHoaDonController extends Controller
         $hoadon->TongTien = $tienupdate;
         $hoadon->save();
         DB::delete('delete from chitiethoadon where MaChiTietHoaDon = :MaChiTietHoaDon', ['MaChiTietHoaDon' => $request['MaChiTietHoaDon']]);
-        return redirect('edithoadon/' .$mahoadon);
+        return redirect('edithoadon/' . $mahoadon);
     }
-    public function chitiethoadon(Request $request,$id){
+    public function chitiethoadon(Request $request, $id)
+    {
         $chitiethoadon = ChiTietHoaDon::find($id);
         return  $chitiethoadon;
     }
-    public function suachitiethoadon(Request $request){
+    public function suachitiethoadon(Request $request)
+    {
         $data = $request->all();
-    
+
         $chitiet = ChiTietHoaDon::find($data['MaChiTietHoaDon']);
         $CayCanh = CayCanh::find($data['MaCay']);
         $hoadon = HoaDon::find($chitiet->MaHoaDon);
@@ -265,5 +309,24 @@ class QLHoaDonController extends Controller
             ->with(compact('nhanvienAll'))
             ->with(compact('khachhangAll'))
             ->with(compact('caycanhAll'));
+    }
+    public function searchhoadon(Request $request)
+    {
+        if (is_null($request['keyword'])) {
+            return redirect('/ql-hoadon');
+        }
+        $hoadonAll =  DB::table('hoadon')
+            ->selectRaw('nhanvien.TenNhanVien as TenNhanVien ,
+                khachhang.TenKhachHang as TenKhachHang ,
+                hoadon.NgayBan as NgayBan ,
+                hoadon.TongTien as TongTien,
+                hoadon.MaHoaDon as MaHoaDon, 
+                hoadon.inhoadon as inhoadon 
+                ')
+            ->leftJoin('nhanvien', 'hoadon.MaNhanVien', '=', 'nhanvien.MaNhanVien')
+            ->leftJoin('khachhang', 'hoadon.MaKhachHang', '=', 'khachhang.MaKhachHang')
+            ->where('MaHoaDon', 'like', '%' . $request['keyword'] . '%')
+            ->get();
+        return view('quanlyhoadon/mh-home')->with(compact('hoadonAll'));
     }
 }

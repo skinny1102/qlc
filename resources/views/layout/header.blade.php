@@ -26,7 +26,7 @@
                     Logout
                 </a>
                 <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink" style="position: absolute;left: -63px;">
-                    <a class="dropdown-item text-light" href="#">Đổi mật khẩu</a>
+                    <a class="dropdown-item text-light" href="/doimatkhau">Đổi mật khẩu</a>
                     <a class="dropdown-item text-light" href="/logout">Đăng xuất</a>
                 </div>
             </li>

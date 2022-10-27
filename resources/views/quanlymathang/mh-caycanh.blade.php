@@ -2,8 +2,8 @@
 @section('noidung')
 <div class="row ">
   <div class="col-3">
-    <div class="p-3 border bg-ligh mt-3 ml-3 menu-hover-active-li"><a href="/ql-mathang/loaicay">Loại cây</a></div>
-    <div class="p-3 border bg-light mt-3 ml-3 menu-hover-active-li"> <a href="/ql-mathang/caycanh">Cây cảnh</a> </div>
+    <div class="p-3 border bg-dark mt-3 ml-3 menu-hover-active-li"><a href="/ql-mathang/loaicay">Loại cây</a></div>
+    <div class="p-3 border bg-dark mt-3 ml-3 menu-hover-active-li"> <a href="/ql-mathang/caycanh">Cây cảnh</a> </div>
   </div>
   <div class="col-8">
     <div class="d-flex justify-content-between">
@@ -15,6 +15,19 @@
           <div class="row">
             <input type="text" class="form-control col-6" id="search" name="keyword">
             <button type="submit" class="btn btn-success ml-1">Tìm kiếm</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="justify-content-between mt-3 ">
+        <form action="/searchkhoanggian" method="POST">
+          @csrf
+          <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+          <div class="row">
+            <input type="text" class="form-control col-3 m-0" id="priceTo" name="priceTo" value="0">
+            <span>Đến</span>
+            <input type="text" class="form-control col-3 m-0" id="priceFrom" name="priceFrom"  value="0">
+            <button type="submit" class="btn btn-success ml-1 col-3">Tìm kiếm</button>
           </div>
         </form>
       </div>
@@ -48,7 +61,11 @@
           <td>{{$caycanh->XuatXu}}</td>
           <td>{{$caycanh->MoTa}}</td>
           <td>
-            <button type="button" class="btn btn-danger btn-delete-caycanh" data-id="{{$caycanh->MaCay}}">Xóa</button>
+            <button type="button" class="btn btn-danger btn-delete-caycanh" data-id="{{$caycanh->MaCay}}"
+            data-toggle="modal" 
+            data-target="#xoacaycanh"
+            
+            >Xóa</button>
             <a type="submit" class="btn btn-success" href="caycanh/{{$caycanh->MaCay}}">Chỉnh sửa</a>
           </td>
         </tr>
@@ -57,6 +74,25 @@
     </table>
   </div>
 </div>
+
+<div class="modal fade" id="xoacaycanh" tabindex="-1" role="dialog" aria-labelledby="xoacaycanh" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="xoacaycanh">Xác nhận xóa</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="confirm-xoa">Xóa</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <form action="/xoacaycanh" method="GET" hidden id="form-delete">
   @csrf
   <input type="hidden" name="_token" value="{{ csrf_token() }}" />
@@ -122,11 +158,11 @@
   </div>
 </div>
 
-<form action="/xoaloaicay" method="GET" hidden id="form-delete">
+<!-- <form action="/xoaloaicay" method="GET" hidden id="form-delete">
   @csrf
   <input type="hidden" name="_token" value="{{ csrf_token() }}" />
   <input type="text" class="form-control" id="deleteMaloaicay" name="MaLoaiCay">
-</form>
+</form> -->
 
 <!-- MODAL SUCESS -->
 <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#modalsuccess" id="btn-sucess" hidden>Thêm loại cây</button>

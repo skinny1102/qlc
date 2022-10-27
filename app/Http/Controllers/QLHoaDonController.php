@@ -53,7 +53,9 @@ class QLHoaDonController extends Controller
             ->leftJoin('hoadon', 'hoadon.MaHoaDon', '=', 'chitiethoadon.MaHoaDon')
             ->where('chitiethoadon.MaHoaDon',  $id)->get();
 
-
+            $hoadonUpdate =  HoaDon::find($id);
+            $hoadonUpdate->inhoadon = 1;
+            $hoadonUpdate->save();
         view()->share('hoadon', $hoadon);
         view()->share('chitietAll', $chitietAll);
         $pdf = Pdf::loadView('file');
@@ -77,8 +79,12 @@ class QLHoaDonController extends Controller
          ')
             ->leftJoin('nhanvien', 'hoadon.MaNhanVien', '=', 'nhanvien.MaNhanVien')
             ->leftJoin('khachhang', 'hoadon.MaKhachHang', '=', 'khachhang.MaKhachHang')
+            ->orderBy('hoadon.created_at', 'desc')
             ->get();
-        return view('quanlyhoadon/mh-home')->with(compact('hoadonAll'));
+            $user= Session::get('user');
+            $userCurrent =  $user[0];
+            $khachhangAll =  DB::table('khachhang')->orderBy('created_at', 'desc')->get()->toArray();
+        return view('quanlyhoadon/mh-home')->with(compact('hoadonAll'))->with(compact('userCurrent'))->with(compact('khachhangAll'));
     }
 
     public function themhoandon(Request $request)

@@ -98,6 +98,7 @@ class QLBaoCaoController extends Controller
          ->leftJoin('nhanvien', 'nhanvien.MaNhanVien', '=', 'hoadon.MaNhanVien')
             ->leftJoin('chitiethoadon', 'chitiethoadon.MaHoaDon', '=', 'hoadon.MaHoaDon')
             ->whereBetween('hoadon.Ngayban', [$dateTo, $dateFrom])
+            ->where('hoadon.inhoadon',1)
             ->groupBy('hoadon.Ngayban', 'hoadon.MaHoaDon', 'hoadon.TongTien','nhanvien.TenNhanVien')
             ->get();
             $user= Session::get('user');
@@ -105,6 +106,33 @@ class QLBaoCaoController extends Controller
         view()->share('dateTo', $dateTo);
         view()->share('dateFrom',$dateFrom);
         $pdf = Pdf::loadView('file-baocaodoanhthu');
+        return $pdf->download('pdf_file.pdf');;
+    }
+
+    public function baocaotheongay(Request $request)
+    {
+        $data = $request->all();
+        $dateChoose = $data['dateChoose'];
+        $data = DB::table('hoadon')
+            ->selectRaw('
+        hoadon.Ngayban as NgayBan,
+        hoadon.MaHoaDon as  MaHoaDon,
+        hoadon.TongTien  as TongTien,
+        nhanvien.TenNhanVien as TenNhanVien,
+        SUM(chitiethoadon.SoLuong) as SoLuong 
+         ')
+         ->leftJoin('nhanvien', 'nhanvien.MaNhanVien', '=', 'hoadon.MaNhanVien')
+            ->leftJoin('chitiethoadon', 'chitiethoadon.MaHoaDon', '=', 'hoadon.MaHoaDon')
+            // ->where( `date_format(hoadon.Ngayban, '%Y-%m-%d')`, $dateChoose)
+            ->whereRaw(DB::raw("DATE_FORMAT(`hoadon`.`Ngayban`, '%Y-%m-%d') = '$dateChoose'"))
+            // 
+            ->where('hoadon.inhoadon',1)
+            ->groupBy('hoadon.Ngayban', 'hoadon.MaHoaDon', 'hoadon.TongTien','nhanvien.TenNhanVien')
+            ->get();
+            $user= Session::get('user');
+        view()->share('hoadon',$data);
+        view()->share('dateChoose', $dateChoose);
+        $pdf = Pdf::loadView('file-baocaotheongay');
         return $pdf->download('pdf_file.pdf');;
     }
 }

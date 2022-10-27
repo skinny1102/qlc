@@ -26,7 +26,11 @@ class AuthController extends Controller
         }
 
         $data = $request;
-        $taikhoan = DB::table('taikhoan')->where('username', $data['username'])->where('password', $data['password'])->get()->toArray();
+        $taikhoan = DB::table('taikhoan')
+        ->where('username', $data['username'])
+        ->where('password', $data['password'])
+        ->leftJoin('nhanvien','nhanvien.MaNhanVien' ,'taikhoan.MaNhanVien' )
+        ->get()->toArray();
         if (count($taikhoan)) {
             Session::put('user', $taikhoan);
             return redirect('/home');

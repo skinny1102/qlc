@@ -2,7 +2,7 @@
 @section('noidung')
 <div class="row ">
     <div class="col-2">
-        <div class="p-3 border bg-dark mt-3 ml-3 menu-hover-active-li"><a href="/ql-nhanvien">Hóa Đơn</a></div>
+        <div class="p-3 border bg-dark mt-3 ml-3 menu-hover-active-li"><a href="/ql-hoadon">Hóa Đơn</a></div>
         <div class="p-3 border bg-dark mt-3 ml-3 menu-hover-active-li"><a href="/ql-baocaothongke">Báo Cáo Thống Kê</a></div>
     </div>
     <div class="col-9">
@@ -14,8 +14,8 @@
                 <tr>
                     <th scope="col" class="text-center">STT</th>
                     <th scope="col" class="text-center">Tên Báo Cáo</th>
-                    <th scope="col" class="text-center">Người lập</th>
                     <th scope="col" class="text-center">Option</th>
+                    <th scope="col" class="text-center">Action</th>
 
                 </tr>
             </thead>
@@ -32,6 +32,25 @@
                                 <input type="date" name="dateTo" class="col-3 p-0">
                                 <p class="col-2">đến</p>
                                 <input type="date" name="dateFrom" class="col-3 p-0">
+                            </div>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-secondary">Xuất Báo cáo</button>
+                        </td>
+
+                    </form>
+
+                </tr>
+
+                
+                <tr>
+                    <form action="/baocaotheongay" method="GET">
+
+                        <td scope="row">1</td>
+                        <td>Báo cáo bán hàng theo ngày</td>
+                        <td>
+                            <div class="row justify-content-center">
+                                <input type="date" name="dateChoose" class="col-3 p-0">
                             </div>
                         </td>
                         <td>

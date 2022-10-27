@@ -72,7 +72,7 @@ class QLMatHangController extends Controller
                 'MaCay', 'TenCay', 'SoLuong',
                 'DonGiaBan', 'XuatXu', 'MoTa', 'loaicay.TenLoaiCay'
             ])
-            ->leftJoin('loaicay', 'loaicay.MaLoaiCay', 'caycanh.MaLoaiCay')
+            ->leftJoin('loaicay', 'loaicay.MaLoaiCay', 'caycanh.MaLoaiCay')->orderBy('caycanh.created_at', 'desc')
             ->get()->toArray();
         return view('quanlymathang/mh-caycanh')->with(compact('loaicayAll'))->with(compact('caycanhAll'));
     }
@@ -158,7 +158,22 @@ class QLMatHangController extends Controller
         return  view('quanlymathang/mh-caycanh')->with(compact('loaicayAll'))->with(compact('caycanhAll'));
     }
 
-
+    public function searchkhoanggian(Request $request)
+    {
+        if (is_null($request['priceTo'] && is_null($request['priceFrom'])  )) {
+            return redirect('ql-mathang/caycanh');
+        }
+        $loaicayAll =  DB::table('loaicay')->orderBy('created_at', 'desc')->get()->toArray();
+        $caycanhAll =  DB::table('caycanh')
+            ->select([
+                'MaCay', 'TenCay', 'SoLuong',
+                'DonGiaBan', 'XuatXu', 'MoTa', 'loaicay.TenLoaiCay'
+            ])
+            ->leftJoin('loaicay', 'loaicay.MaLoaiCay', 'caycanh.MaLoaiCay')
+            ->whereBetween('caycanh.DonGiaBan', [$request['priceTo'], $request['priceFrom']])
+            ->get()->toArray();
+        return  view('quanlymathang/mh-caycanh')->with(compact('loaicayAll'))->with(compact('caycanhAll'));
+    }
 
     //////////////////// API 
     public function listCayCanh(){

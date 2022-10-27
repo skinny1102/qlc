@@ -2,7 +2,7 @@
 @section('noidung')
 <div class="row ">
   <div class="col-3">
-    <div class="p-3 border bg-ligh mt-3 ml-3 menu-hover-active-li"><a href="/ql-nhanvien">Quản lý  Nhân viên</a></div>
+    <div class="p-3 border bg-dark mt-3 ml-3 menu-hover-active-li"><a href="/ql-nhanvien">Quản lý  Nhân viên</a></div>
   </div>
   <div class="col-8">
 
@@ -18,7 +18,7 @@
           </div>
         </form>
       </div>
-      <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#modalcreate">Thêm Khách hàng</button>
+      <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#modalcreate">Thêm Nhân viên</button>
     </div>
     <table class="table mt-3 table-bordered">
       <thead>
@@ -47,9 +47,8 @@
           <td>{{$nhanvien->DienThoai}}</td>
           <td>{{$nhanvien->NgaySinh}}</td>
           <td>
-            <button type="button" class="btn btn-danger btn-delete-nhanvien" data-id="{{$nhanvien->MaNhanVien}}">Xóa</button>
+            <button type="button" class="btn btn-danger btn-delete-nhanvien" data-toggle="modal" data-target="#modalDelete" data-id="{{$nhanvien->MaNhanVien}}">Xóa</button>
             <a type="submit" class="btn btn-success" href="editnhanvien/{{$nhanvien->MaNhanVien}}">Chỉnh sửa</a>
-
           </td>
         </tr>
         @endforeach
@@ -157,4 +156,26 @@
     </div>
   </div>
 </div>
+<!--------Modal Xóa --->
+
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDelete" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xác nhận xóa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- <div class="modal-body">
+        ...
+      </div> -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary " id="confirm-xoa">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection

@@ -48,7 +48,7 @@ Route::get('/xoacaycanh', [QLMatHangController::class, 'xoaCayCanh']);
 Route::get('/ql-mathang/caycanh/{id}', [QLMatHangController::class, 'detailCayCanh']);
 Route::post('/editcaycanh/{id}', [QLMatHangController::class, 'updateCayCanh']);
 Route::post('/searchcaycanh', [QLMatHangController::class, 'searchCayCanh']);
-
+Route::post('/searchkhoanggian', [QLMatHangController::class, 'searchkhoanggian']);
 
 
 //Khachhang 
@@ -82,7 +82,7 @@ Route::get('/xoachitiethoadon', [QLHoaDonController::class, 'xoachitiethoadon'])
 Route::get('/chitiethoadon/{id}', [QLHoaDonController::class, 'chitiethoadon']);
 Route::post('/suachitiethoadon', [QLHoaDonController::class, 'suachitiethoadon']);
     //inhoadon 
-    Route::get('/inhoadon/{id}', [QLHoaDonController::class, 'inhoadon']); 
+Route::get('/inhoadon/{id}', [QLHoaDonController::class, 'inhoadon']); 
 // api 
 Route::get('/listcaycanh', [QLMatHangController::class, 'listCayCanh']);
 Route::get('/detailcaycanh/{id}', [QLMatHangController::class, 'detailsCayCanh']);
@@ -94,3 +94,4 @@ Route::get('/xuatpdf/{id}', [QLHoaDonController::class, 'xuatpdf']);
 // báo cáo thống kế
 Route::get('/ql-baocaothongke', [QLBaoCaoController::class, 'index']);  
 Route::get('/doanhthuthang', [QLBaoCaoController::class, 'doanhthuthang']);  
+Route::get('/baocaotheongay', [QLBaoCaoController::class, 'baocaotheongay']);  

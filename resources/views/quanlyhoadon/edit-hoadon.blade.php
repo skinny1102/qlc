@@ -8,6 +8,9 @@
         <div class="d-flex justify-content-between">
             <h4 class=" mt-3">Chỉnh sửa</h4>
         </div>
+        <div class="d-flex justify-content-between">
+            <a class="btn btn-dark mt-3" href="/xuatpdf/{{$hoadon->MaHoaDon}}">In Hóa Đơn</a>
+        </div>
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalCreateLabel">Chỉnh Sửa Hóa Đơn Mới</h5>
@@ -26,13 +29,12 @@
                         </div>
                         <div class="form-group col-6">
                             <label for="MaNhanVien">Tên Nhân Viên</label>
-                            <select class="form-control" aria-label=".form-select-sm example" name="MaNhanVien">
+                            <select class="form-control" aria-label=".form-select-sm example" name="MaNhanVien" readonly>
                                 @foreach ($nhanvienAll as $nhanvien)
                                 @if ( $hoadon-> MaNhanVien == $nhanvien->MaNhanVien )
                                 <option value="{{$nhanvien->MaNhanVien}}" selected>{{$nhanvien->TenNhanVien}}</option>
                                 @else
-
-                                <option value="{{$nhanvien->MaNhanVien}}">{{$nhanvien->TenNhanVien}}</option>
+                                <!-- <option value="{{$nhanvien->MaNhanVien}}">{{$nhanvien->TenNhanVien}}</option> -->
                                 @endif
                                 @endforeach
                             </select>
@@ -63,17 +65,24 @@
                             <input type="text" class="form-control" name="TongTien" readonly value="{{$hoadon->TongTien}}">
                         </div>
                     </div>
-
+                    @if ( $hoadon-> inhoadon == 1 )
+                    <button type="submit" class="btn btn-success" disabled>Sửa </button>
+                    @else
                     <button type="submit" class="btn btn-success">Sửa </button>
+                    @endif
 
                 </form>
             </div>
 
             <div class="row justify-content-between">
                 <h5 class="ml-4">Danh sách cây</h5>
-                <button type="button" class="btn btn-primary mr-4" data-toggle="modal" data-target="#exampleModal">
-                    Thêm cây
-                </button>
+                @if ( $hoadon-> inhoadon == 1 )
+                <button type="button" class="btn btn-primary mr-4" data-toggle="modal" data-target="#exampleModal" disabled>
+                    @else
+                    <button type="button" class="btn btn-primary mr-4" data-toggle="modal" data-target="#exampleModal">
+                        @endif
+                        Thêm cây
+                    </button>
             </div>
             <div class="row justify-content-center">
                 <table class="table mt-1 table-bordered" style="width: 930px;">
@@ -84,7 +93,7 @@
                             <th scope="col">Giá</th>
                             <th scope="col">Số lượng</th>
                             <th scope="col">Đơn Giá</th>
-                            <th scope="col" ></th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody id="table-body">
@@ -109,13 +118,23 @@
                             </td>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-success btn-suachitiethoadon" data-toggle="modal" 
-                                data-target="#editModal" data-id="{{$chitiet->MaChiTietHoaDon}}">
+                                @if ( $hoadon-> inhoadon == 1 )
+
+                                <button type="button" class="btn btn-success" disabled>
+                                    Chỉnh sửa
+                                </button>
+                                <button type="button" class="btn btn-danger" disabled>
+                                    Xóa
+                                </button>
+                                @else
+
+                                <button type="button" class="btn btn-success btn-suachitiethoadon" data-toggle="modal" data-target="#editModal" data-id="{{$chitiet->MaChiTietHoaDon}}">
                                     Chỉnh sửa
                                 </button>
                                 <button type="button" class="btn btn-danger btn-delete-chitiethoadon" data-id="{{$chitiet->MaChiTietHoaDon}}">
                                     Xóa
                                 </button>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
@@ -184,20 +203,20 @@
                     <form method="POST" action="/suachitiethoadon">
                         @csrf
                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                        <input type="hidden" class="form-control" id='id-chitiet'name="MaChiTietHoaDon">
+                        <input type="hidden" class="form-control" id='id-chitiet' name="MaChiTietHoaDon">
                         <div class="row">
                             <div class="form-group col-6">
                                 <label for="MaKhachHang">Tên Cây</label>
                                 <select class="form-control" aria-label=".form-select-sm example" name="MaCay" id="caycanh-chitiet">
                                     @foreach ($caycanhAll as $caycanh)
-                                        <option value="{{$caycanh->MaCay}}">{{$caycanh->TenCay}}</option>
+                                    <option value="{{$caycanh->MaCay}}">{{$caycanh->TenCay}}</option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <div class="form-group col-6">
                                 <label for="TongTien">Số lượng</label>
-                                <input type="text" class="form-control" id='sl-chitiet'name="SoLuong">
+                                <input type="text" class="form-control" id='sl-chitiet' name="SoLuong">
                             </div>
                         </div>
                         <button type="submit" class="btn btn-success">Thêm</button>

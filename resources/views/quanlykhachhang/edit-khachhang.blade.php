@@ -2,8 +2,8 @@
 @section('noidung')
 <div class="row ">
   <div class="col-3">
-    <div class="p-3 border bg-ligh mt-3 ml-3 menu-hover-active-li"><a href="/ql-mathang/loaicay">Loại cây</a></div>
-    <div class="p-3 border bg-light mt-3 ml-3 menu-hover-active-li"> <a href="/ql-mathang/caycanh">Cây cảnh</a> </div>
+    <div class="p-3 border bg-dark mt-3 ml-3 menu-hover-active-li"><a href="/ql-mathang/loaicay">Loại cây</a></div>
+    <div class="p-3 border bg-dark mt-3 ml-3 menu-hover-active-li"> <a href="/ql-mathang/caycanh">Cây cảnh</a> </div>
   </div>
   <div class="col-8">
     <div class="d-flex justify-content-center">

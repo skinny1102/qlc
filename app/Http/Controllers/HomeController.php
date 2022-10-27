@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CayCanh;
+use App\Models\HoaDon;
+use App\Models\KhachHang;
+use App\Models\NhanVien;
 use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
@@ -23,7 +27,20 @@ class HomeController extends Controller
         if (is_null($data)) {
             return redirect('login');
         } else {
-            return view('home/home');
+
+            $counthoadon = HoaDon::count();
+            $countnhanvien = NhanVien::count();
+            $countkhachhang = KhachHang::count();
+            $countcaycanh = CayCanh::count();
+
+
+
+            return view('home/home')
+            ->with(compact('counthoadon'))
+            ->with(compact('countnhanvien'))
+            ->with(compact('countkhachhang'))
+            ->with(compact('countcaycanh'))
+            ;
         }
     }
 }

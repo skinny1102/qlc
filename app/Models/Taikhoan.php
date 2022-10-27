@@ -16,6 +16,7 @@ class Taikhoan extends Model
     protected $fillable = [
         'username',
         'password',
+        'MaNhanVien',
     ];
     protected $primaryKey = 'id';
     protected $table = 'taikhoan';

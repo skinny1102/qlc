@@ -7,11 +7,11 @@ $.ajax({
     },
     success: function (data) {
         data.forEach((element) => {
-            $("#MaKhachHang").append(
-                $("<option>", {
-                    value: element.MaKhachHang,
-                    text: element.TenKhachHang,
-                })
+            console.log(element);
+            $(".es-list").append(
+                $(
+                    `<li value=${element.MaKhachHang} class="es-visible"> ${element.MaKhachHang} - ${element.TenKhachHang} -${element.DienThoai}  </li>`
+                )
             );
         });
     },
@@ -20,27 +20,27 @@ $.ajax({
     },
 });
 
-$.ajax({
-    method: "GET",
-    url: "/listnhanvien",
-    headers: {
-        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-    },
-    success: function (data) {
-        console.log(data);
-        data.forEach((element) => {
-            $("#MaNhanVien").append(
-                $("<option>", {
-                    value: element.MaNhanVien,
-                    text: element.TenNhanVien,
-                })
-            );
-        });
-    },
-    error: function (err) {
-        console.log(err);
-    },
-});
+// $.ajax({
+//     method: "GET",
+//     url: "/listnhanvien",
+//     headers: {
+//         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+//     },
+//     success: function (data) {
+//         console.log(data);
+//         data.forEach((element) => {
+//             $("#MaNhanVien").append(
+//                 $("<option>", {
+//                     value: element.MaNhanVien,
+//                     text: element.TenNhanVien,
+//                 })
+//             );
+//         });
+//     },
+//     error: function (err) {
+//         console.log(err);
+//     },
+// });
 
 const callInfoCayCanh = function () {
     $.ajax({
@@ -230,28 +230,47 @@ $("#btn-themmoihoadon").on("click", function (e) {
         mangChitiet.push(chiethoadon);
     });
     const MaNhanVien = $("#MaNhanVien").val();
-    const MaKhachHang = $("#MaKhachHang").val();
+    // const MaKhachHang = $("#MaKhachHang").val();
+    const MaKhachHang = $("#editable-select").val().split("-")[0].trim();
     const NgayLap = $("#NgayBan").val();
     const TongTien = $("#TongTien").val();
     const data = {
-        MaNhanVien: MaNhanVien,
+        MaNhanVien: Number(MaNhanVien),
         MaKhachHang: MaKhachHang,
-        NgayLap: NgayLap,
+        NgayLap: NgayLap + " 00:00:00",
         TongTien: TongTien,
-        chitiet : mangChitiet
+        chitiet: mangChitiet,
     };
-    $.ajax({
-        method: "POST",
-        url: "/themhoadon",
-        data : data,
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (data) {
-            location.reload();
-        },
-        error: function (err) {
-            console.log(err);
-        },
-    });
+    if (
+        mangChitiet[0].Dongia != "" &&
+        mangChitiet[0].MaCay != "" &&
+        mangChitiet[0].Soluong != ""
+    ) {
+        // check chitiet lon hon 0
+    }
+    if (
+        MaKhachHang != "" &&
+        mangChitiet.length > 0 &&
+        mangChitiet[0].Dongia != "" &&
+        mangChitiet[0].MaCay != "" &&
+        mangChitiet[0].Soluong != ""
+    ) {
+        console.log(data);
+        // $.ajax({
+        //     method: "POST",
+        //     url: "/themhoadon",
+        //     data: data,
+        //     headers: {
+        //         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        //     },
+        //     success: function (data) {
+        //         location.reload();
+        //     },
+        //     error: function (err) {
+        //         console.log(err);
+        //     },
+        // });
+    }
 });
+
+$("#editable-select").editableSelect();

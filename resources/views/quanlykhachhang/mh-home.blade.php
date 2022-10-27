@@ -2,7 +2,7 @@
 @section('noidung')
 <div class="row ">
   <div class="col-3">
-    <div class="p-3 border bg-ligh mt-3 ml-3 menu-hover-active-li"><a href="/ql-khachhang">Quản lý Khách hàng</a></div>
+    <div class="p-3 border bg-dark mt-3 ml-3 menu-hover-active-li"><a href="/ql-khachhang">Quản lý Khách hàng</a></div>
   </div>
   <div class="col-8">
 
@@ -82,11 +82,11 @@
           <div class="form-group">
             <label for="GioiTinh">Giới Tính</label>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Nữ">
+              <input class="form-check-input" type="radio" name="GioiTinh" id="inlineRadio1" value="Nữ">
               <label class="form-check-label" for="inlineRadio1">Nữ</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Nam">
+              <input class="form-check-input" type="radio" name="GioiTinh" id="inlineRadio2" value="Nam">
               <label class="form-check-label" for="inlineRadio2">Nam</label>
             </div>
           </div>

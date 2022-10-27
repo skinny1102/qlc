@@ -2,7 +2,7 @@
 @section('noidung')
 <div class="row bg-clg">
     <div class="col-2">
-        <div class="p-3 border bg-ligh mt-3 ml-3 menu-hover-active-li"><a href="/ql-nhanvien">Hóa Đơn</a></div>
+        <div class="p-3 border bg-ligh mt-3 ml-3 menu-hover-active-li"><a href="/ql-hoadon">Hóa Đơn</a></div>
     </div>
     <div class="col-9">
         <div class="d-flex justify-content-between">

@@ -2,8 +2,8 @@
 @section('noidung')
 <div class="row ">
   <div class="col-3">
-    <div class="p-3 border bg-ligh mt-3 ml-3 menu-hover-active-li"><a href="/ql-mathang/loaicay">Loại cây</a></div>
-    <div class="p-3 border bg-light mt-3 ml-3 menu-hover-active-li"> <a href="/ql-mathang/caycanh">Cây cảnh</a> </div>
+    <div class="p-3 border bg-dark mt-3 ml-3 menu-hover-active-li"><a href="/ql-mathang/loaicay">Loại cây</a></div>
+    <div class="p-3 border bg-dark mt-3 ml-3 menu-hover-active-li"> <a href="/ql-mathang/caycanh">Cây cảnh</a> </div>
   </div>
   <div class="col-6">
     <div class="d-flex justify-content-center">
@@ -28,7 +28,7 @@
           <td>{{$loaicay->MaLoaiCay}}</td>
           <td>{{$loaicay->TenLoaiCay}}</td>
           <td>
-            <button type="button" class="btn btn-danger btn-delete-cay" data-id="{{$loaicay->MaLoaiCay}}">Xóa</button>
+            <button type="button" class="btn btn-danger btn-delete-cay"  data-toggle="modal" data-target="#modaldeletecay" data-id="{{$loaicay->MaLoaiCay}}">Xóa</button>
             <button type="submit" class="btn btn-success">Chỉnh sửa</button>
           </td>
         </tr>
@@ -51,11 +51,30 @@
     </form>
   </div>
 </div>
-<form action="/xoaloaicay" method="GET" hidden id="form-delete">
+<!-- Modal DELETE -->
+<!-- <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#modaldelete" id="btn-delete" hidden>Thêm loại cây</button> -->
+<div class="modal fade" id="modaldeletecay" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" >Xóa</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success" id="btn-xacnhan-xoacay">Xác nhận xóa</button>
+        <button type="submit" class="btn btn-light"data-dismiss="modal">Close </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <form action="/xoaloaicay" method="GET" hidden id="form-delete">
   @csrf
   <input type="hidden" name="_token" value="{{ csrf_token() }}" />
   <input type="text" class="form-control" id="deleteMaloaicay" name="MaLoaiCay">
-</form>
+</form> -->
 <!-- Modal -->
 <div class="modal fade" id="modalcreate" tabindex="-1" aria-labelledby="modalCreateLabel" aria-hidden="true">
   <div class="modal-dialog">

@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pdfs', function (Blueprint $table) {
-            $table->id();
+        Schema::create('taikhoan', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('username');
+            $table->string('password');
+            $table->integer('MaNhanVien')->nullable();
             $table->timestamps();
         });
     }

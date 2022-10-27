@@ -35,8 +35,8 @@
             </thead>
             <tbody>
             <tbody>
-            <?php $number = 1; ?>
-            @foreach ($hoadonAll as $hoadon)
+                <?php $number = 1; ?>
+                @foreach ($hoadonAll as $hoadon)
                 <tr>
                     <td scope="row">{{ $number }}</td>
                     <?php $number++; ?>
@@ -45,14 +45,27 @@
                     <td>{{$hoadon->TenKhachHang}}</td>
                     <td>{{$hoadon->NgayBan}}</td>
                     <td>{{$hoadon->TongTien}}</td>
-                    <td>{{$hoadon->inhoadon}}</td>
+                    <td>
+
+                        @if ( $hoadon-> inhoadon == 1 )
+                        <p>Đã in hóa đơn </p>
+                        @else
+                        <p>Chưa in hóa đơn </p>
+                        @endif
+
+                    </td>
                     <td>
                         <a type="button" class="btn btn-secondary" href="inhoadon/{{$hoadon->MaHoaDon}}">In</a>
+                        @if ( $hoadon-> inhoadon == 1 )
+                        <a type="submit" class="btn btn-success" href="edithoadon/{{$hoadon->MaHoaDon}}">Xem </a>
+                        @else
                         <a type="submit" class="btn btn-success" href="edithoadon/{{$hoadon->MaHoaDon}}">Chỉnh sửa</a>
-                        <button type="button" class="btn btn-danger btn-delete-hoadon" data-id="{{$hoadon->MaHoaDon}}">Xóa</button>
+                        <button type="button" class="btn btn-danger btn-delete-hoadon" data-id="{{$hoadon->MaHoaDon}}" data-toggle="modal" data-target="#modalDelete">Xóa</button>
+                        @endif
+
                     </td>
                 </tr>
-            @endforeach
+                @endforeach
             </tbody>
             </tbody>
         </table>
@@ -63,6 +76,27 @@
     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
     <input type="text" class="form-control" id="deletehoadon" name="MaHoaDon">
 </form>
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDelete" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xác nhận xóa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- <div class="modal-body">
+        ...
+      </div> -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary " id="confirm-xoa">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- Modal -->
 <div class=" modal fade " id="modalcreate" tabindex="-1" aria-labelledby="modalCreateLabel" aria-hidden="true">
     <div class="modal-dialog " style="max-width: 1000px;">
@@ -84,8 +118,8 @@
                         </div> -->
                         <div class="form-group col-6">
                             <label for="MaNhanVien">Tên Nhân Viên</label>
-                                 <select class="form-control" aria-label=".form-select-sm example" id="MaNhanVien" name="MaNhanVien">
-                            </select>
+                            <input class="form-control" id="MaNhanVien" name="MaNhanVien" readonly value="{{$userCurrent->MaNhanVien}}" hidden>
+                            <input class="form-control" readonly value="{{$userCurrent->TenNhanVien}}">
                         </div>
                     </div>
                     <div class="row">
@@ -95,8 +129,12 @@
                         </div>
                         <div class="form-group col-6">
                             <label for="MaKhachHang">Tên Khách hàng</label>
-                            <select class="form-control" aria-label=".form-select-sm example" id="MaKhachHang" name="MaKhachHang">
+                            <select id="editable-select" class="form-control" name="MaKhachHang">
+                                <!-- @foreach ($khachhangAll as $khachhang)
+                                <option value="{{$khachhang->MaKhachHang}}"> {{$khachhang->MaKhachHang}} -{{$khachhang->TenKhachHang}} - {{$khachhang->DienThoai}} </option>
+                            @endforeach -->
                             </select>
+                            <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#modalcreateKhachHang">Thêm Khách hàng</button>
                         </div>
                     </div>
                     <div class="row">
@@ -123,7 +161,7 @@
                                     <th scope="col">Mã Cây</th>
                                     <th scope="col">Giá</th>
                                     <th scope="col">Số lượng</th>
-                                    <th scope="col">Đơn Giá</th>
+                                    <th scope="col">Thành tiền</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -207,6 +245,53 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-model-loaicay">Đóng</button>
                 <button type="submit" class="btn btn-success" id="btn-themmoiloaicay">Thêm mới </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalcreateKhachHang" tabindex="-1" aria-labelledby="modalCreateLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCreateLabel">Thêm mới Khách hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="model-themcay">
+                <form method="POST" action="/themkhachhang" id="themmoikhachhang">
+                    @csrf
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                    <div class="form-group">
+                        <label for="TenKhachHang">Tên Khách hàng</label>
+                        <input type="text" class="form-control" id="TenKhachHang" name="TenKhachHang">
+                    </div>
+                    <div class="form-group">
+                        <label for="GioiTinh">Giới Tính</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="GioiTinh" value="Nữ" name="GioiTinh">
+                            <label class="form-check-label" for="inlineRadio1">Nữ</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="GioiTinh" value="Nam" name="GioiTinh">
+                            <label class="form-check-label" for="inlineRadio2">Nam</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="DiaChi">Địa Chỉ</label>
+                        <input type="text" class="form-control" id="DiaChi" name="DiaChi">
+                    </div>
+                    <div class="form-group">
+                        <label for="DienThoai">Điện Thoại</label>
+                        <input type="text" class="form-control" id="DienThoai" name="DienThoai">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-model-khachhang">Đóng</button>
+                <button type="submit" class="btn btn-success" id="btn-themmoikhachhang">Thêm mới </button>
             </div>
         </div>
     </div>
